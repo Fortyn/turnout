@@ -4,5 +4,8 @@ export const Scale = {
         y: 20,
         z: 100,
         floorHeight: 1
+    },
+    walls: {
+        depth: 2
     }
 }

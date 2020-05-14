@@ -15,10 +15,10 @@ export const GroundFloor: React.FunctionComponent<GroundFloorProps>
     const centerZ = lengthZ / 2;
     return (
         <mesh>
-            {/*<mesh position={[centerX, height / 2, centerZ]}>*/}
-            {/*    <boxBufferGeometry attach="geometry" args={[lengthX, height, lengthZ]}/>*/}
-            {/*    <meshStandardMaterial attach="material" color={0x00ffff} opacity={0.9} transparent/>*/}
-            {/*</mesh>*/}
+            <mesh position={[centerX, height / 2, centerZ]}>
+                <boxBufferGeometry attach="geometry" args={[lengthX, height, lengthZ]}/>
+                <meshStandardMaterial attach="material" color={'gray'} opacity={0.3} transparent/>
+            </mesh>
             <mesh position={[0, lengthY / 2, 0]}>
                 {props.children}
             </mesh>
