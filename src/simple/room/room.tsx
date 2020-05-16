@@ -1,20 +1,18 @@
 import React, {useState} from "react";
 import {useLoader, useThree} from "react-three-fiber";
-import {TextureLoader, DoubleSide, RepeatWrapping} from "three";
-import {Scale} from "../../common/scale";
-import {Direction} from "../direction";
+import {TextureLoader, DoubleSide} from "three";
+import {Scale} from "../../common/geometry";
 import {Point2D} from "../point-2d";
-import {Wall} from "../wall/wall";
+import {Wall, WallDefinition} from "../wall/wall";
 import image from "./textures/side.png"
 
-interface RoomProps {
+export interface RoomProps {
     lbc: Point2D;
     rtc: Point2D;
-    walls: {
-        direction: Direction
-    }[];
+    walls: WallDefinition[];
 }
 
+export type RoomDefinition = RoomProps;
 export const Room: React.FunctionComponent<RoomProps> = (props) => {
     const {raycaster, scene} = useThree();
     const [active, setActive] = useState(false);
@@ -25,6 +23,21 @@ export const Room: React.FunctionComponent<RoomProps> = (props) => {
     const sizeX = Math.abs(lengthX);
     const sizeZ = Math.abs(lengthZ);
     const texture = useLoader(TextureLoader, image);
+    const walls: WallDefinition[] = props.walls.map(
+        wall => {
+            return {
+                doors: wall.doors.map(door => {
+                    return {
+                        center: {
+                            x: door.center.x - centerX,
+                            z: door.center.z - centerZ,
+                        }
+                    };
+                }),
+                direction: wall.direction
+            };
+        }
+    );
     return (
         <mesh
             position={[centerX, 0, centerZ]}
@@ -40,7 +53,7 @@ export const Room: React.FunctionComponent<RoomProps> = (props) => {
         >
             <boxBufferGeometry
                 attach="geometry"
-                args={[sizeX+0.1, Scale.groundFloor.y+0.1, sizeZ+0.1]}
+                args={[sizeX + 0.1, Scale.groundFloor.y + 0.1, sizeZ + 0.1]}
             />
             <meshStandardMaterial
                 attach="material"
@@ -51,12 +64,14 @@ export const Room: React.FunctionComponent<RoomProps> = (props) => {
                 alphaTest={0.5}
             />
             {
-                props.walls.map(wall =>
+                walls.map(wall =>
                     <Wall
                         key={`${wall.direction}`}
-                        direction={wall.direction}
-                        roomSizeX={sizeX}
-                        roomSizeZ={sizeZ}
+                        roomSize={{
+                            x: sizeX,
+                            z: sizeZ
+                        }}
+                        {...wall}
                     />
                 )
 

@@ -1,5 +1,5 @@
 import React from "react";
-import {Scale} from "../common/scale";
+import {Scale} from "../common/geometry";
 
 interface GroundFloorProps {
 

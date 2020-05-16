@@ -7,5 +7,9 @@ export const Scale = {
     },
     walls: {
         depth: 2
+    },
+    doors: {
+        width: 8,
+        height: 16
     }
 }

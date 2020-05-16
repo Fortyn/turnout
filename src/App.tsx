@@ -3,10 +3,10 @@ import {useThree, Canvas} from "react-three-fiber";
 import {Vector3, AxesHelper} from "three";
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls'
 import {CanvasBody} from "./canvas-body/canvas-body";
-import {Scale} from "./common/scale";
+import {Scale} from "./common/geometry";
 import {GroundFloor} from "./ground-floor/ground-floor";
 import {Direction} from "./simple/direction";
-import {Room} from "./simple/room/room"
+import {Room, RoomDefinition} from "./simple/room/room"
 
 const CameraController = () => {
     const {camera, gl} = useThree();
@@ -34,30 +34,47 @@ const CameraController = () => {
 
 function App() {
 
-    const boxProps = {
+    const boxProps: RoomDefinition = {
         lbc: {
-            x: 30,
+            x: 0,
             z: 0
         },
         rtc: {
-            x: 0,
+            x: 30,
             z: 20
         },
         walls: [
             {
-                direction: Direction.left
+                direction: Direction.front,
+                doors: []
             },
             {
-                direction: Direction.front
+                direction: Direction.left,
+                doors: []
             },
             {
-                direction: Direction.back
+                direction: Direction.back,
+                doors: []
             },
             {
-                direction: Direction.right
+                direction: Direction.right,
+                doors: [
+                    {
+                        center: {
+                            x: 7,
+                            z: 20
+                        }
+                    },
+                    {
+                        center: {
+                            x: 20,
+                            z: 20
+                        }
+                    }
+                ]
             }
         ]
-    }
+    };
     const boxProps0 = {
         lbc: {
             x: 50,
@@ -69,19 +86,16 @@ function App() {
         },
         walls: [
             {
-                direction: Direction.left
+                direction: Direction.front,
+                doors:[]
             },
             {
-                direction: Direction.front
-            },
-            {
-                direction: Direction.back
-            },
-            {
-                direction: Direction.right
+                direction: Direction.left,
+                doors:[]
             }
         ]
     }
+
     return (
         <div style={{height: window.innerHeight * 0.97}}>
             <Canvas
