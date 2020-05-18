@@ -1,9 +1,10 @@
-import React, {useEffect, Suspense} from "react";
+import React, {useEffect, Suspense, useRef} from "react";
 import {useThree, Canvas} from "react-three-fiber";
 import {Vector3, AxesHelper} from "three";
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls'
 import {CanvasBody} from "./canvas-body/canvas-body";
 import {Scale} from "./common/geometry";
+import {LocationProvider} from "./geolocation/location-provider";
 import {GroundFloor} from "./ground-floor/ground-floor";
 import {Direction} from "./simple/direction";
 import {Room, RoomDefinition} from "./simple/room/room"
@@ -98,6 +99,7 @@ function App() {
 
     return (
         <div style={{height: window.innerHeight * 0.97}}>
+            <LocationProvider/>
             <Canvas
                 camera={{
                     fov: 100,
