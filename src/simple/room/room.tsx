@@ -41,15 +41,16 @@ export const Room: React.FunctionComponent<RoomProps> = (props) => {
     return (
         <mesh
             position={[centerX, 0, centerZ]}
-            onClick={e => {
-                e.stopPropagation();
-                const intersections = raycaster.intersectObjects(scene.children, true);
-                const intersected = intersections[0].object;
-                if (e.eventObject.uuid === intersected.uuid) {
-                    setActive(!active);
-                    return;
-                }
-            }}
+            onPointerUp={e => {
+            console.log(e);
+            e.stopPropagation();
+            const intersections = raycaster.intersectObjects(scene.children, true);
+            const intersected = intersections[0].object;
+            if (e.eventObject.uuid === intersected.uuid) {
+                setActive(!active);
+                return;
+            }
+        }}
         >
             <boxBufferGeometry
                 attach="geometry"
