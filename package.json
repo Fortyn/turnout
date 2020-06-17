@@ -19,7 +19,6 @@
     "history": "^5.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-geolocated": "^3.0.1",
     "react-router": "^5.2.0",
     "react-scripts": "3.4.1",
     "react-three-fiber": "^4.2.10",

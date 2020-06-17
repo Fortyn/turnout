@@ -19,7 +19,8 @@ export interface RoomProps {
 export type RoomDefinition = RoomProps;
 export const Room: React.FunctionComponent<RoomProps> = (props) => {
     const {raycaster, scene} = useThree();
-    const [active, setActive] = useState(false);
+    const { selectedRoomId, selectRoom } = useContext(CanvasContext);
+    const active = selectedRoomId === props.id;
     const lengthX = props.rtc.x - props.lbc.x
     const lengthZ = props.rtc.z - props.lbc.z
     const centerX = props.lbc.x + lengthX / 2;
@@ -42,7 +43,6 @@ export const Room: React.FunctionComponent<RoomProps> = (props) => {
             };
         }
     );
-    const {selectRoom} = useContext(CanvasContext);
     return (
         <mesh
             position={[centerX, 0, centerZ]}
@@ -56,7 +56,6 @@ export const Room: React.FunctionComponent<RoomProps> = (props) => {
                     } else {
                         selectRoom(props.id);
                     }
-                    setActive(!active);
                     return;
                 }
             }}

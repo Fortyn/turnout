@@ -95,6 +95,7 @@ export class HttpClientService {
 
   private handle453Error(error: Error) {
     localStorageHelperService.removeRefreshToken();
+    localStorageHelperService.removeUserInfo();
     localHistory.push("/login")
     window.location.reload();
     return Promise.reject(error);

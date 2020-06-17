@@ -27,7 +27,7 @@ export const Wall = (props: WallProps) => {
     rotatedRoomSize.x = Math.abs(rotatedRoomSize.x);
     rotatedRoomSize.z = Math.abs(rotatedRoomSize.z);
     return (
-        <mesh rotation={[0, -angle, 0]}>
+        <mesh rotation={[0, angle, 0]}>
             <DirectWall
                 texture={texture}
                 roomSize={rotatedRoomSize}

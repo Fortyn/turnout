@@ -12,11 +12,8 @@ interface Props {
 
 export const LocationProvider: React.FunctionComponent<Props> = props => {
     const {roomId, resetRoom} = props;
-    const serverName = "ANCHOR";
-    const serviceUuid = "00003333-0000-1000-8000-00805f9b34fb";
-    const characteristic = "00003334-0000-1000-8000-00805f9b34fb";
     const getAnchors = () => {
-        httpClientService.get(`/rooms/${roomId}/anchors`)
+        httpClientService.get(`/protected/rooms/${roomId}/anchors`)
             .then(response => response.data as Anchor[])
             .then(anchors => checkArea(anchors));
     }
@@ -26,11 +23,12 @@ export const LocationProvider: React.FunctionComponent<Props> = props => {
             anchorId: anchor.id,
             characteristicValue: value
         }
-        httpClientService.post(`/turnout`, turnout)
+        httpClientService.post(`/protected/turnout`, turnout)
             .then(response => response.data as { status: string })
             .then(data => {
                 if (data.status === 'ACCEPTED') {
                     alert('Turnout has been registered');
+                    return;
                 }
                 alert('Turnout registration was rejected');
             });
@@ -39,6 +37,7 @@ export const LocationProvider: React.FunctionComponent<Props> = props => {
         let connectedDevice: BluetoothDevice;
         let selectedAnchor: Anchor;
         const b = navigator.bluetooth;
+        console.log(b);
         if (!b) {
             return;
         }
@@ -78,7 +77,6 @@ export const LocationProvider: React.FunctionComponent<Props> = props => {
             }
             const array = new Uint8Array(value.buffer);
             const decodedValue = new TextDecoder("utf-8").decode(array);
-            alert(decodedValue);
             registerTurnout(selectedAnchor, decodedValue);
         }).catch(reason => console.log(reason))
             .finally(() => {
