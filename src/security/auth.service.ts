@@ -1,9 +1,9 @@
 import { from, Observable } from 'rxjs';
 import {AuthenticationProps} from "./auth-models";
+import httpClientService from "./http-client.service";
 import localStorageHelperService from './local-storage-helper-service';
 import { AxiosResponse } from 'axios';
 import { map, tap } from 'rxjs/operators';
-import httpClientService from './http-client.service';
 
 export class AuthService {
   public refreshToken(): Observable<AuthenticationProps> {

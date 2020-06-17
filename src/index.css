@@ -2,3 +2,7 @@ body {
     margin: 0;
     background-color: #ffe0b2;
 }
+canvas {
+    outline: none;
+    border: none;
+}

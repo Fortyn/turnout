@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosPromise, AxiosRequestConfig } from 'axios';
-import {history} from "../portal-container/portal-container";
+import {localHistory} from "../portal-container/portal-container";
 import localStorageHelperService from './local-storage-helper-service';
 import { Observable } from 'rxjs';
 import authService from './auth.service';
@@ -8,7 +8,6 @@ import { finalize, mapTo, share, switchMap } from 'rxjs/operators';
 export class HttpClientService {
   public readonly baseUrl = '';
   public readonly axiosInstance: AxiosInstance;
-
   private tokenSubject: Observable<boolean> | undefined;
 
   public constructor() {
@@ -96,7 +95,8 @@ export class HttpClientService {
 
   private handle453Error(error: Error) {
     localStorageHelperService.removeRefreshToken();
-    history.push("/login");
+    localHistory.push("/login")
+    window.location.reload();
     return Promise.reject(error);
   }
 }

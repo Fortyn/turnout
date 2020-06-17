@@ -1,15 +1,19 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import {useLoader, useThree} from "react-three-fiber";
 import {TextureLoader, DoubleSide} from "three";
+import {CanvasContext} from "../../canvas-body/canvas-body";
 import {Scale} from "../../common/geometry";
 import {Point2D} from "../point-2d";
+import {Text} from "../text/text"
 import {Wall, WallDefinition} from "../wall/wall";
-import image from "./textures/side.png"
+import image from "./textures/gold.jpg"
 
 export interface RoomProps {
+    id: number;
     lbc: Point2D;
     rtc: Point2D;
     walls: WallDefinition[];
+    identifier: string;
 }
 
 export type RoomDefinition = RoomProps;
@@ -38,19 +42,24 @@ export const Room: React.FunctionComponent<RoomProps> = (props) => {
             };
         }
     );
+    const {selectRoom} = useContext(CanvasContext);
     return (
         <mesh
             position={[centerX, 0, centerZ]}
             onPointerUp={e => {
-            console.log(e);
-            e.stopPropagation();
-            const intersections = raycaster.intersectObjects(scene.children, true);
-            const intersected = intersections[0].object;
-            if (e.eventObject.uuid === intersected.uuid) {
-                setActive(!active);
-                return;
-            }
-        }}
+                e.stopPropagation();
+                const intersections = raycaster.intersectObjects(scene.children, true);
+                const intersected = intersections[0].object;
+                if (e.eventObject.uuid === intersected.uuid) {
+                    if (active) {
+                        selectRoom(0);
+                    } else {
+                        selectRoom(props.id);
+                    }
+                    setActive(!active);
+                    return;
+                }
+            }}
         >
             <boxBufferGeometry
                 attach="geometry"
@@ -75,8 +84,13 @@ export const Room: React.FunctionComponent<RoomProps> = (props) => {
                         {...wall}
                     />
                 )
-
             }
+            <mesh
+                position={[0, Scale.groundFloor.y / 2, 0]}
+                rotation={[Math.PI * 3 / 2, 0, Math.PI * 3/2]}
+            >
+                <Text text={props.identifier} size={10}/>
+            </mesh>
         </mesh>
     );
 }

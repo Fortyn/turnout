@@ -1,8 +1,6 @@
-
 import {Theme} from "@material-ui/core";
-import {orange} from "@material-ui/core/colors";
 import createStyles from '@material-ui/core/styles/createStyles';
-import { WithStyles } from '@material-ui/core/styles/withStyles';
+import {WithStyles} from '@material-ui/core/styles/withStyles';
 
 export type Style = WithStyles<typeof styles>;
 

@@ -1,8 +1,8 @@
 export const Scale = {
     groundFloor: {
-        x: 100,
+        x: 300,
         y: 20,
-        z: 100,
+        z: 300,
         floorHeight: 1
     },
     walls: {

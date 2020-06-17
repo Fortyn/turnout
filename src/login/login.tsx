@@ -1,18 +1,17 @@
-import {IconButton} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import {orange} from "@material-ui/core/colors";
 import withStyles from "@material-ui/core/styles/withStyles";
 import TextField from "@material-ui/core/TextField";
+import {LockOpen, Lock} from '@material-ui/icons';
 import React from "react";
-import {history} from "../portal-container/portal-container";
-import {AuthState, AuthenticationProps} from "../security/auth-models";
+import {RouteComponentProps, withRouter} from "react-router";
+import {AuthenticationProps} from "../security/auth-models";
 import httpClientService from "../security/http-client.service";
 import localStorageHelperService from "../security/local-storage-helper-service";
 import {Style, styles} from "./styles";
-import {LockOpen, Lock} from '@material-ui/icons';
 
-type Props = Style;
+type Props = Style & RouteComponentProps;
 
 const inputProps = {
     style: {
@@ -21,6 +20,7 @@ const inputProps = {
 };
 
 const Login: React.FunctionComponent<Props> = props => {
+    console.log("RENDER");
     const {classes} = props;
     const [login, setLogin ] = React.useState<string>('')
     const [password, setPassword ] = React.useState<string>('')
@@ -38,7 +38,8 @@ const Login: React.FunctionComponent<Props> = props => {
                 if(auth.user) {
                     localStorageHelperService.setUserInfo(auth.user);
                 }
-                history.push("/home");
+                props.history.push("/");
+                window.location.reload();
             })
     };
     return (
@@ -86,4 +87,4 @@ const Login: React.FunctionComponent<Props> = props => {
         </div>
     );
 }
-export default withStyles(styles)(Login);
+export default withRouter(withStyles(styles)(Login));

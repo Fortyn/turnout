@@ -1,14 +1,18 @@
-import React, {useState} from "react";
+import React from "react";
 
-interface CanvasStore {}
+interface CanvasStore {
+    selectRoom: (id: number) => void;
+    selectedRoomId: number;
+}
 
-export const CanvasContext = React.createContext<CanvasStore>({});
+export const CanvasContext = React.createContext<CanvasStore>({
+    selectRoom: () => {},
+    selectedRoomId: 0
+});
 
-export const CanvasBody: React.FunctionComponent<{}> = (props) => {
-    const [bool, setBool] = useState(false);
-
+export const CanvasBody: React.FunctionComponent<CanvasStore> = (props) => {
     return (
-        <CanvasContext.Provider value={bool}>
+        <CanvasContext.Provider value={props}>
             {props.children}
         </CanvasContext.Provider>
     );
