@@ -22,7 +22,7 @@
     "react-router": "^5.2.0",
     "react-scripts": "3.4.1",
     "react-three-fiber": "^4.2.10",
-    "three": "^0.115.0",
+    "three": "^0.137.0",
     "typescript": "^3.9.5"
   },
   "scripts": {
